@@ -8,7 +8,8 @@ var fs = require('fs');
 var multer  = require('multer')
 var path = require('path')
 var request = require('request');
-
+var should = require('chai').should()
+var expect = require('chai').expect
 require('dotenv').config()
 
 
@@ -57,12 +58,14 @@ app.get('/', function(req, res) {
 //Route for GET
 
 app.post('/scan', upload.single('card'), function(req, res, next) {
+  // console.log(req.file)
+  // if(req.file.mimetype.should.equal('image/jpeg'))
+  // console.log(req.body)
+    // if(typeof req.file == "undefined" || typeof req.file["card"] == undefined || typeof req.card == undefined) {
+    //     res.send({status: "error", message: "filename key as 'card' is required"});
+    // } else if(expect(req.file.mimetype).to.be.oneOf(['image/jpeg','image/png'])){
 
-    if(typeof req.file == "undefined" || typeof req.file["card"] == undefined) {
-        res.send({status: "error", message: "filename key as 'card' is required"});
-    } else {
-
-        //uploadFile(reqM);
+        // uploadFile(reqM);
         console.log("EVENT : " + JSON.stringify(req.file));
         res.status(200).json({
             upload : true,
@@ -71,11 +74,31 @@ app.post('/scan', upload.single('card'), function(req, res, next) {
             error_status: null,
             status_code: 200
           })
-    }
+    // }
+
 
 });
 //Route for file uploads
 
+app.post('/relay', function(req, res, next) {
+  // console.log(req.file)
+  // if(req.file.mimetype.should.equal('image/jpeg'))
+  // console.log(req.body)
+    // if(typeof req.file == "undefined" || typeof req.file["card"] == undefined || typeof req.card == undefined) {
+    //     res.send({status: "error", message: "filename key as 'card' is required"});
+    // } else if(expect(req.file.mimetype).to.be.oneOf(['image/jpeg','image/png'])){
+
+        // uploadFile(reqM);
+        // console.log("EVENT : " + JSON.stringify(req.file));
+        res.status(200).json({
+            upload : true,
+            data: req.body
+          })
+    // }
+
+
+});
+
 app.listen(port);
 console.log("Server started successfully at PORT : " + port);
-//module.exports=app;
+module.exports=app;
